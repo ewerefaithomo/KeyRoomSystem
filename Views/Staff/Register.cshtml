@@ -1,0 +1,397 @@
+﻿@model KeyRoomSystem.Models.Staff
+
+@{
+    ViewData["Title"] = "Register Staff";
+    Layout = null;
+
+    var departments = ViewBag.Departments
+        as List<string>
+        ?? new List<string>();
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Key Room Management System - Register Staff
+    </title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <style>
+
+        body {
+            background-color: #f4f8f6;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+        }
+
+        .top-header {
+            background-color: #198754;
+            color: white;
+            padding: 18px 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+
+        .system-name {
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        .system-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .header-btn {
+            color: white;
+            border: 1px solid rgba(255,255,255,0.7);
+        }
+
+            .header-btn:hover {
+                background-color: white;
+                color: #198754;
+            }
+
+        .page-container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 35px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .page-title {
+            color: #198754;
+            font-weight: 700;
+        }
+
+        .page-description {
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+
+        .registration-icon {
+            font-size: 55px;
+            color: #198754;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .required {
+            color: #dc3545;
+        }
+
+        .staff-number-display {
+            background-color: #e8f5ee;
+            border: 1px solid #b7dfc9;
+            color: #146c43;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 12px 15px;
+            border-radius: 6px;
+        }
+
+        .department-container {
+            position: relative;
+        }
+
+        .department-help {
+            color: #6c757d;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #6c757d;
+            font-size: 13px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- HEADER -->
+
+    <div class="top-header">
+
+        <div class="container-fluid">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <div class="system-name">
+                        Key Room Management System
+                    </div>
+
+                    <div class="system-subtitle">
+                        Key Issuance, Collection and Monitoring
+                    </div>
+
+                </div>
+
+                <div>
+
+                    <a asp-controller="Dashboard"
+                       asp-action="Index"
+                       class="btn header-btn">
+
+                        <i class="bi bi-speedometer2"></i>
+
+                        Dashboard
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+
+    <div class="page-container">
+
+        <div class="page-card">
+
+
+            <div class="registration-icon">
+
+                <i class="bi bi-person-plus-fill"></i>
+
+            </div>
+
+
+            <h2 class="page-title text-center">
+
+                Register Staff
+
+            </h2>
+
+
+            <p class="page-description text-center">
+
+                The Staff Number was not found in the Key Room
+                Staff Register. Please provide the staff details
+                below to complete registration.
+
+            </p>
+
+
+            <!-- VALIDATION SUMMARY -->
+
+            <div asp-validation-summary="ModelOnly"
+                 class="alert alert-danger"
+                 role="alert">
+            </div>
+
+
+            <!-- REGISTRATION FORM -->
+
+            <form asp-controller="Staff"
+                  asp-action="Register"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+
+                <!-- STAFF NUMBER -->
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+
+                        Staff Number
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <div class="staff-number-display">
+
+                        <i class="bi bi-person-badge"></i>
+
+                        @Model.StaffNumber
+
+                    </div>
+
+                    <input asp-for="StaffNumber"
+                           type="hidden" />
+
+                    <span asp-validation-for="StaffNumber"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- FULL NAME -->
+
+                <div class="mb-4">
+
+                    <label asp-for="FullName"
+                           class="form-label">
+
+                        Full Name
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <input asp-for="FullName"
+                           class="form-control form-control-lg"
+                           placeholder="Enter full name"
+                           autocomplete="off" />
+
+                    <span asp-validation-for="FullName"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- DEPARTMENT -->
+
+                <div class="mb-4 department-container">
+
+                    <label asp-for="Department"
+                           class="form-label">
+
+                        Department
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <input asp-for="Department"
+                           class="form-control form-control-lg"
+                           list="departmentList"
+                           placeholder="Select or type department"
+                           autocomplete="off" />
+
+                    <datalist id="departmentList">
+
+                        @foreach (var department in departments)
+                        {
+                            <option value="@department"></option>
+                        }
+
+                    </datalist>
+
+                    <div class="department-help">
+
+                        Select a department from the existing list or
+                        type a new department if it is not currently
+                        listed.
+
+                    </div>
+
+                    <span asp-validation-for="Department"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- PHONE NUMBER -->
+
+                <div class="mb-4">
+
+                    <label asp-for="PhoneNumber"
+                           class="form-label">
+
+                        Phone Number
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <input asp-for="PhoneNumber"
+                           type="tel"
+                           class="form-control form-control-lg"
+                           placeholder="Enter phone number"
+                           autocomplete="off" />
+
+                    <span asp-validation-for="PhoneNumber"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="d-flex justify-content-between mt-4">
+
+                    <a asp-controller="Staff"
+                       asp-action="Search"
+                       class="btn btn-secondary">
+
+                        <i class="bi bi-arrow-left"></i>
+
+                        Back to Search
+
+                    </a>
+
+
+                    <button type="submit"
+                            class="btn btn-success btn-lg">
+
+                        <i class="bi bi-person-check-fill"></i>
+
+                        Register
+
+                    </button>
+
+                </div>
+
+            </form>
+
+
+        </div>
+
+
+        <div class="footer">
+
+            Key Room Management System
+
+            <br />
+
+            ICT Unit
+
+        </div>
+
+    </div>
+
+
+    <partial name="_ValidationScriptsPartial" />
+
+</body>
+
+</html>

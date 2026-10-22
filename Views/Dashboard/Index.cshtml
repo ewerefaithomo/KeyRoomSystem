@@ -1,0 +1,545 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Key Room Management System - Dashboard
+    </title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/ubth-brand.css" />
+
+    <style>
+
+        body {
+            background-color: #f4f8f6;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+        }
+
+        /* =====================================================
+                   HEADER
+                   ===================================================== */
+
+        .top-header {
+            background-color: #198754;
+            color: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        .logout-btn {
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            font-weight: 600;
+        }
+
+            .logout-btn:hover {
+                background-color: white;
+                color: #198754;
+            }
+
+
+        /* =====================================================
+                   DASHBOARD
+                   ===================================================== */
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+            .welcome h2 {
+                color: #198754;
+                font-weight: 700;
+            }
+
+
+        /* =====================================================
+                   STATISTICS
+                   ===================================================== */
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 22px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            height: 100%;
+        }
+
+        .stat-icon {
+            font-size: 35px;
+            color: #198754;
+        }
+
+        .stat-title {
+            color: #6c757d;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .stat-value {
+            font-size: 30px;
+            font-weight: 700;
+            color: #212529;
+        }
+
+
+        /* =====================================================
+                   MENU
+                   ===================================================== */
+
+        .menu-section {
+            margin-top: 40px;
+        }
+
+            .menu-section h4 {
+                color: #198754;
+                font-weight: 700;
+                margin-bottom: 20px;
+            }
+
+        .menu-card {
+            background: white;
+            border: none;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            text-decoration: none;
+            color: #212529;
+            display: block;
+            height: 100%;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s ease-in-out;
+        }
+
+            .menu-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 7px 20px rgba(0, 0, 0, 0.13);
+                color: #198754;
+            }
+
+        .menu-icon {
+            font-size: 45px;
+            color: #198754;
+            margin-bottom: 15px;
+        }
+
+        .menu-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .menu-description {
+            color: #6c757d;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+
+        /* =====================================================
+                   FOOTER
+                   ===================================================== */
+
+        .footer {
+            text-align: center;
+            margin-top: 45px;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 13px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- =========================================================
+         UBTH HEADER
+         ========================================================= -->
+
+    <div class="top-header">
+
+        <div class="container-fluid">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div class="ubth-brand">
+
+                    <div class="ubth-logo-container">
+
+                        <img src="~/images/ubth-logo.jpeg"
+                             alt="University of Benin Teaching Hospital Logo"
+                             class="ubth-logo" />
+
+                    </div>
+
+                    <div class="ubth-name-container">
+
+                        <div class="ubth-name">
+                            UNIVERSITY OF BENIN TEACHING HOSPITAL
+                        </div>
+
+                        <div class="ubth-system-name">
+                            KEY ROOM MANAGEMENT SYSTEM
+                        </div>
+
+                        <div class="ubth-system-description">
+                            Key Issuance, Collection and Monitoring
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <a asp-controller="Account"
+                       asp-action="Logout"
+                       class="btn logout-btn">
+
+                        <i class="bi bi-box-arrow-right"></i>
+
+                        Logout
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         DASHBOARD
+         ========================================================= -->
+
+    <div class="dashboard-container">
+
+        <div class="welcome">
+
+            <h2>
+                Dashboard
+            </h2>
+
+            <p class="text-muted">
+                Welcome to the Key Room Management System.
+            </p>
+
+        </div>
+
+
+        <!-- =====================================================
+             STATISTICS
+             ===================================================== -->
+
+        <div class="row g-4">
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="bi bi-key-fill"></i>
+                    </div>
+
+                    <div class="stat-title">
+                        Total Keys
+                    </div>
+
+                    <div class="stat-value">
+                        @ViewBag.TotalKeys
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="bi bi-key"></i>
+                    </div>
+
+                    <div class="stat-title">
+                        Available Keys
+                    </div>
+
+                    <div class="stat-value">
+                        @ViewBag.AvailableKeys
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="bi bi-person-check-fill"></i>
+                    </div>
+
+                    <div class="stat-title">
+                        Collected Keys
+                    </div>
+
+                    <div class="stat-value">
+                        @ViewBag.CollectedKeys
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+
+                    <div class="stat-title">
+                        Registered Staff
+                    </div>
+
+                    <div class="stat-value">
+                        @ViewBag.TotalStaff
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             KEY ROOM OPERATIONS
+             ===================================================== -->
+
+        <div class="menu-section">
+
+            <h4>
+                Key Room Operations
+            </h4>
+
+            <div class="row g-4">
+
+
+                <!-- REGISTER KEYS -->
+
+                <div class="col-md-6 col-lg-4">
+
+                    <a asp-controller="Keys"
+                       asp-action="Create"
+                       class="menu-card">
+
+                        <div class="menu-icon">
+                            <i class="bi bi-key-fill"></i>
+                        </div>
+
+                        <div class="menu-title">
+                            Register New Keys
+                        </div>
+
+                        <div class="menu-description">
+                            Register new keys and add them to the Key Room inventory.
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <!-- REGISTER STAFF -->
+
+                <div class="col-md-6 col-lg-4">
+
+                    <a asp-controller="Staff"
+                       asp-action="Search"
+                       class="menu-card">
+
+                        <div class="menu-icon">
+                            <i class="bi bi-person-plus-fill"></i>
+                        </div>
+
+                        <div class="menu-title">
+                            Register Staff
+                        </div>
+
+                        <div class="menu-description">
+                            Search for a Staff Number and register authorized hospital staff.
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <!-- COLLECT KEYS -->
+
+                <div class="col-md-6 col-lg-4">
+
+                    <a asp-controller="Transactions"
+                       asp-action="Collect"
+                       class="menu-card">
+
+                        <div class="menu-icon">
+                            <i class="bi bi-box-arrow-right"></i>
+                        </div>
+
+                        <div class="menu-title">
+                            Collect Keys
+                        </div>
+
+                        <div class="menu-description">
+                            Record the collection of keys by staff.
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <!-- RETURN KEYS -->
+
+                <div class="col-md-6 col-lg-4">
+
+                    <a asp-controller="Transactions"
+                       asp-action="ReturnKey"
+                       class="menu-card">
+
+                        <div class="menu-icon">
+                            <i class="bi bi-box-arrow-up"></i>
+                        </div>
+
+                        <div class="menu-title">
+                            Return Keys
+                        </div>
+
+                        <div class="menu-description">
+                            Record the return of keys previously collected.
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <!-- SEARCH -->
+
+                <div class="col-md-6 col-lg-4">
+
+                    <a asp-controller="Search"
+                       asp-action="Index"
+                       class="menu-card">
+
+                        <div class="menu-icon">
+                            <i class="bi bi-search"></i>
+                        </div>
+
+                        <div class="menu-title">
+                            Search
+                        </div>
+
+                        <div class="menu-description">
+                            Search staff, keys and key collection records.
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <!-- REPORT -->
+
+                <div class="col-md-6 col-lg-4">
+
+                    <a asp-controller="Reports"
+                       asp-action="Index"
+                       class="menu-card">
+
+                        <div class="menu-icon">
+                            <i class="bi bi-bar-chart-fill"></i>
+                        </div>
+
+                        <div class="menu-title">
+                            Report
+                        </div>
+
+                        <div class="menu-description">
+                            View and generate key room operational reports.
+                        </div>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             FOOTER
+             ===================================================== -->
+
+        <div class="footer">
+
+            <strong>
+                UNIVERSITY OF BENIN TEACHING HOSPITAL
+            </strong>
+
+            <br />
+
+            Key Room Management System
+
+            <br />
+
+            ICT Unit
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

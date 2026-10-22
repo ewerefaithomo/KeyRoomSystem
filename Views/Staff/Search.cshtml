@@ -1,0 +1,366 @@
+﻿@{
+    ViewData["Title"] = "Search Staff";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Key Room Management System - Search Staff
+    </title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <style>
+
+        body {
+            background-color: #f4f8f6;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+        }
+
+        .top-header {
+            background-color: #198754;
+            color: white;
+            padding: 18px 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+
+        .system-name {
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        .system-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .header-btn {
+            color: white;
+            border: 1px solid rgba(255,255,255,0.7);
+        }
+
+            .header-btn:hover {
+                background-color: white;
+                color: #198754;
+            }
+
+        .page-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .page-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 35px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .page-title {
+            color: #198754;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .page-description {
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+
+        .search-icon {
+            font-size: 55px;
+            color: #198754;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .search-btn {
+            min-width: 150px;
+        }
+
+        .existing-staff {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 18px;
+            border-radius: 6px;
+            margin-top: 25px;
+        }
+
+        .existing-staff-title {
+            font-weight: 700;
+            color: #856404;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #6c757d;
+            font-size: 13px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- HEADER -->
+
+    <div class="top-header">
+
+        <div class="container-fluid">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <div class="system-name">
+                        Key Room Management System
+                    </div>
+
+                    <div class="system-subtitle">
+                        Key Issuance, Collection and Monitoring
+                    </div>
+
+                </div>
+
+                <div>
+
+                    <a asp-controller="Dashboard"
+                       asp-action="Index"
+                       class="btn header-btn">
+
+                        <i class="bi bi-speedometer2"></i>
+
+                        Dashboard
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+
+    <div class="page-container">
+
+        <div class="page-card">
+
+
+            <div class="search-icon">
+
+                <i class="bi bi-person-search"></i>
+
+            </div>
+
+
+            <h2 class="page-title text-center">
+
+                Staff Registration
+
+            </h2>
+
+
+            <p class="page-description text-center">
+
+                Enter the Staff Number to determine whether the staff
+                member is already registered in the Key Room system.
+
+            </p>
+
+
+            <!-- SUCCESS MESSAGE -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+
+                    <i class="bi bi-check-circle-fill"></i>
+
+                    @TempData["SuccessMessage"]
+
+                </div>
+            }
+
+
+            <!-- ERROR MESSAGE -->
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-warning">
+
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+
+                    @TempData["ErrorMessage"]
+
+                </div>
+            }
+
+
+            <!-- SEARCH FORM -->
+
+            <form asp-controller="Staff"
+                  asp-action="Search"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+
+                <div class="mb-4">
+
+                    <label for="staffNumber"
+                           class="form-label">
+
+                        Staff Number
+
+                    </label>
+
+                    <input type="text"
+                           id="staffNumber"
+                           name="staffNumber"
+                           class="form-control form-control-lg"
+                           placeholder="Enter Staff Number"
+                           autocomplete="off"
+                           required />
+
+                    <div class="form-text">
+
+                        Enter the official Staff Number exactly as
+                        assigned to the staff member.
+
+                    </div>
+
+                </div>
+
+
+                <div class="d-flex justify-content-between">
+
+                    <a asp-controller="Dashboard"
+                       asp-action="Index"
+                       class="btn btn-secondary">
+
+                        <i class="bi bi-arrow-left"></i>
+
+                        Back
+
+                    </a>
+
+
+                    <button type="submit"
+                            class="btn btn-success search-btn">
+
+                        <i class="bi bi-search"></i>
+
+                        Search
+
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <!-- EXISTING STAFF INFORMATION -->
+            @if (ViewBag.ExistingStaff != null)
+            {
+                var existingStaff = ViewBag.ExistingStaff
+                as KeyRoomSystem.Models.Staff;
+
+                if (existingStaff != null)
+                {
+                    <div class="existing-staff">
+
+                        <div class="existing-staff-title mb-2">
+
+                            <i class="bi bi-person-check-fill"></i>
+
+                            Staff Already Registered
+
+                        </div>
+
+                        <hr />
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-2">
+
+                                <strong>Staff Number:</strong><br />
+
+                                @existingStaff.StaffNumber
+
+                            </div>
+
+                            <div class="col-md-6 mb-2">
+
+                                <strong>Full Name:</strong><br />
+
+                                @existingStaff.FullName
+
+                            </div>
+
+                            <div class="col-md-6 mb-2">
+
+                                <strong>Department:</strong><br />
+
+                                @existingStaff.Department
+
+                            </div>
+
+                            <div class="col-md-6 mb-2">
+
+                                <strong>Phone Number:</strong><br />
+
+                                @existingStaff.PhoneNumber
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+            }
+
+
+        </div>
+
+
+        <div class="footer">
+
+            Key Room Management System
+
+            <br />
+
+            ICT Unit
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

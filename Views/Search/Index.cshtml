@@ -1,0 +1,1013 @@
+﻿@model KeyRoomSystem.Models.SearchViewModel
+
+@{
+    ViewData["Title"] = "Search";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Key Room Management System - Search
+    </title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+
+    <style>
+
+        body {
+            background-color: #f4f8f6;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+        }
+
+
+        /* =====================================================
+                   HEADER
+                   ===================================================== */
+
+        .top-header {
+            background-color: #198754;
+            color: white;
+            padding: 18px 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+
+
+        .system-name {
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+
+        .system-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+
+        /* =====================================================
+                   PAGE CONTAINER
+                   ===================================================== */
+
+        .page-container {
+            max-width: 1400px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+
+        .page-title {
+            color: #198754;
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+                   SEARCH CARD
+                   ===================================================== */
+
+        .search-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+
+        .search-icon {
+            font-size: 45px;
+            color: #198754;
+        }
+
+
+        /* =====================================================
+                   RESULT CARD
+                   ===================================================== */
+
+        .result-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 22px;
+            margin-top: 25px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+
+        .result-title {
+            color: #198754;
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+                   TABLE
+                   ===================================================== */
+
+        .table thead th {
+            background-color: #198754;
+            color: white;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+
+        .table tbody td {
+            vertical-align: middle;
+        }
+
+
+        /* =====================================================
+                   STATUS
+                   ===================================================== */
+
+        .status-collected {
+            color: #dc3545;
+            font-weight: 700;
+        }
+
+
+        .status-returned {
+            color: #198754;
+            font-weight: 700;
+        }
+
+
+        .available {
+            color: #198754;
+            font-weight: 700;
+        }
+
+
+        .unavailable {
+            color: #dc3545;
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+                   EMPTY STATE
+                   ===================================================== */
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #6c757d;
+        }
+
+
+            .empty-state i {
+                font-size: 55px;
+                color: #198754;
+                margin-bottom: 15px;
+            }
+
+
+        /* =====================================================
+                   RESULT COUNT
+                   ===================================================== */
+
+        .result-count {
+            background-color: #f0f8f4;
+            border-left: 5px solid #198754;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+
+        /* =====================================================
+                   FOOTER
+                   ===================================================== */
+
+        .footer {
+            text-align: center;
+            margin-top: 45px;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+                   RESPONSIVE
+                   ===================================================== */
+
+        @@media (max-width: 768px) {
+            .system-name
+
+        {
+            font-size: 19px;
+        }
+
+        .top-header {
+            padding: 15px;
+        }
+
+        .page-container {
+            margin-top: 20px;
+        }
+
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         HEADER
+         ========================================================= -->
+
+    <div class="top-header">
+
+        <div class="container-fluid">
+
+            <div class="d-flex
+                        justify-content-between
+                        align-items-center">
+
+                <div>
+
+                    <div class="system-name">
+
+                        Key Room Management System
+
+                    </div>
+
+                    <div class="system-subtitle">
+
+                        Key Issuance, Collection and Monitoring
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <a asp-controller="Dashboard"
+                       asp-action="Index"
+                       class="btn btn-outline-light">
+
+                        <i class="bi bi-speedometer2"></i>
+
+                        Dashboard
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         MAIN PAGE
+         ========================================================= -->
+
+    <div class="page-container">
+
+
+        <!-- =====================================================
+             PAGE TITLE
+             ===================================================== -->
+
+        <div class="mb-4">
+
+            <h2 class="page-title">
+
+                <i class="bi bi-search"></i>
+
+                Search Key Room Records
+
+            </h2>
+
+            <p class="text-muted">
+
+                Search staff, keys and key collection records.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             SEARCH FORM
+             ===================================================== -->
+
+        <div class="search-card">
+
+
+            <div class="row align-items-center">
+
+
+                <div class="col-md-1 text-center">
+
+                    <div class="search-icon">
+
+                        <i class="bi bi-search"></i>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-11">
+
+                    <form asp-controller="Search"
+                          asp-action="Index"
+                          method="get">
+
+
+                        <div class="row g-3 align-items-end">
+
+
+                            <!-- SEARCH TYPE -->
+
+                            <div class="col-md-4">
+
+                                <label for="searchType"
+                                       class="form-label fw-bold">
+
+                                    Search In
+
+                                </label>
+
+                                <select id="searchType"
+                                        name="searchType"
+                                        class="form-select">
+
+                                    <option value="all"
+                                            selected="@(Model.SearchType == "all")">
+
+                                        All Records
+
+                                    </option>
+
+                                    <option value="staff"
+                                            selected="@(Model.SearchType == "staff")">
+
+                                        Staff
+
+                                    </option>
+
+                                    <option value="key"
+                                            selected="@(Model.SearchType == "key")">
+
+                                        Keys
+
+                                    </option>
+
+                                    <option value="transaction"
+                                            selected="@(Model.SearchType == "transaction")">
+
+                                        Key Transactions
+
+                                    </option>
+
+                                    <option value="status"
+                                            selected="@(Model.SearchType == "status")">
+
+                                        Transaction Status
+
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+
+                            <!-- SEARCH TEXT -->
+
+                            <div class="col-md-6">
+
+                                <label for="query"
+                                       class="form-label fw-bold">
+
+                                    Search
+
+                                </label>
+
+                                <input type="text"
+                                       id="query"
+                                       name="query"
+                                       value="@Model.Query"
+                                       class="form-control"
+                                       placeholder="Enter Staff Number, name, key number, room name, department..."
+                                       autocomplete="off" />
+
+                            </div>
+
+
+
+                            <!-- SEARCH BUTTON -->
+
+                            <div class="col-md-2">
+
+                                <button type="submit"
+                                        class="btn btn-success w-100">
+
+                                    <i class="bi bi-search"></i>
+
+                                    Search
+
+                                </button>
+
+                            </div>
+
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        @if (!string.IsNullOrWhiteSpace(Model.Query))
+        {
+
+            <!-- =================================================
+                 RESULT SUMMARY
+                 ================================================= -->
+
+            <div class="result-card">
+
+
+                <div class="result-count">
+
+                    <strong>
+
+                        Search Results
+
+                    </strong>
+
+                    <span class="ms-2">
+
+                        @Model.TotalResults
+                        result(s) found for
+
+                        <strong>
+                            "@Model.Query"
+                        </strong>
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     STAFF RESULTS
+                     ================================================= -->
+                @if ((Model.SearchType == "all" ||
+                            Model.SearchType == "staff") &&
+                            Model.StaffResults.Any())
+                {
+
+                    <h4 class="result-title mb-3">
+
+                        <i class="bi bi-people-fill"></i>
+
+                        Staff Results
+
+                    </h4>
+
+
+                    <div class="table-responsive mb-5">
+
+                        <table class="table
+                                              table-bordered
+                                              table-hover
+                                              table-striped">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        S/N
+                                    </th>
+
+                                    <th>
+                                        Staff Number
+                                    </th>
+
+                                    <th>
+                                        Full Name
+                                    </th>
+
+                                    <th>
+                                        Department
+                                    </th>
+
+                                    <th>
+                                        Phone Number
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                @{
+                                    int staffSerial = 1;
+                                }
+
+                                @foreach (var staff
+                                                        in Model.StaffResults)
+                                {
+
+                                    <tr>
+
+                                        <td>
+                                            @staffSerial
+                                        </td>
+
+                                        <td class="fw-bold">
+
+                                            @staff.StaffNumber
+
+                                        </td>
+
+                                        <td>
+
+                                            @(staff.FullName
+                                                                            ?? "(Name not provided)")
+
+                                        </td>
+
+                                        <td>
+
+                                            @(staff.Department
+                                                                            ?? "(Department not provided)")
+
+                                        </td>
+
+                                        <td>
+
+                                            @(staff.PhoneNumber
+                                                                            ?? "(Phone not provided)")
+
+                            </td>
+
+                                                            </tr>
+
+                                                            staffSerial++;
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                }
+
+
+
+                <!-- =================================================
+                     KEY RESULTS
+                     ================================================= -->
+                @if ((Model.SearchType == "all" ||
+                            Model.SearchType == "key") &&
+                            Model.KeyResults.Any())
+                {
+
+                    <h4 class="result-title mb-3">
+
+                        <i class="bi bi-key-fill"></i>
+
+                        Key Results
+
+                    </h4>
+
+
+                    <div class="table-responsive mb-5">
+
+                        <table class="table
+                                              table-bordered
+                                              table-hover
+                                              table-striped">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        S/N
+                                    </th>
+
+                                    <th>
+                                        Key Number
+                                    </th>
+
+                                    <th>
+                                        Room Name
+                                    </th>
+
+                                    <th>
+                                        Description
+                                    </th>
+
+                                    <th>
+                                        Availability
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                @{
+                                    int keySerial = 1;
+                                }
+
+                                @foreach (var key
+                                                        in Model.KeyResults)
+                                {
+
+                                    <tr>
+
+                                        <td>
+                                            @keySerial
+                                        </td>
+
+                                        <td class="fw-bold">
+
+                                            @key.KeyNumber
+
+                                        </td>
+
+                                        <td>
+
+                                            @key.RoomName
+
+                                        </td>
+
+                                        <td>
+
+                                            @(key.Description
+                                                                            ?? "-")
+
+                            </td>
+
+                                        <td>
+
+                                @if (key.IsAvailable)
+                                            {
+
+                                                <span class="available">
+
+                                                    <i class="bi bi-check-circle-fill"></i>
+
+                                                    Available
+
+                                                </span>
+
+                                            }
+                                            else
+                                            {
+
+                                                <span class="unavailable">
+
+                                                    <i class="bi bi-person-fill"></i>
+
+                                                    Collected
+
+                                                </span>
+
+                                            }
+
+                                        </td>
+
+                                    </tr>
+
+                                    keySerial++;
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                }
+
+
+
+                <!-- =================================================
+                     TRANSACTION RESULTS
+                     ================================================= -->
+                @if ((Model.SearchType == "all" ||
+                            Model.SearchType == "transaction" ||
+                            Model.SearchType == "status") &&
+                            Model.Results.Any())
+                {
+
+                    <h4 class="result-title mb-3">
+
+                        <i class="bi bi-arrow-left-right"></i>
+
+                        Key Transaction Results
+
+                    </h4>
+
+
+                    <div class="table-responsive">
+
+                        <table class="table
+                                              table-bordered
+                                              table-hover
+                                              table-striped">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        S/N
+                                    </th>
+
+                                    <th>
+                                        Key Number
+                                    </th>
+
+                                    <th>
+                                        Room Name
+                                    </th>
+
+                                    <th>
+                                        Staff Number
+                                    </th>
+
+                                    <th>
+                                        Staff Name
+                                    </th>
+
+                                    <th>
+                                        Department
+                                    </th>
+
+                                    <th>
+                                        Date Collected
+                                    </th>
+
+                                    <th>
+                                        Date Returned
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                @{
+                                    int transactionSerial = 1;
+                                }
+
+                                @foreach (var transaction
+                                                        in Model.Results)
+                                {
+
+                                    <tr>
+
+                                        <td>
+
+                                            @transactionSerial
+
+                                        </td>
+
+
+                                        <td class="fw-bold">
+
+                                            @transaction.KeyItem?.KeyNumber
+
+                                        </td>
+
+
+                                        <td>
+
+                                            @transaction.KeyItem?.RoomName
+
+                                        </td>
+
+
+                                        <td>
+
+                                            @transaction.StaffNumber
+
+                                        </td>
+
+
+                                        <td>
+
+                                            @(transaction.Staff?.FullName
+                                                                            ?? "(Name not provided)")
+
+                                        </td>
+
+
+                                        <td>
+
+                                            @(transaction.Staff?.Department
+                                                                            ?? "(Department not provided)")
+
+                            </td>
+
+
+                                                                        <td>
+
+                                                                            @transaction.DateCollected.ToString(
+                                                                            "dd/MM/yyyy HH:mm")
+
+                            </td>
+
+
+                                        <td>
+
+                                @if (transaction.DateReturned.HasValue)
+                                            {
+
+                                                @transaction.DateReturned.Value.ToString(
+                                                "dd/MM/yyyy HH:mm")
+
+                                                                }
+                                            else
+                                            {
+
+                                                <span class="text-danger fw-bold">
+
+                                                    Not Returned
+
+                                                </span>
+
+                                            }
+
+                                        </td>
+
+
+                                        <td>
+
+                                            @if (transaction.Status ==
+                                                                            "Collected")
+                                            {
+
+                                                <span class="status-collected">
+
+                                                    <i class="bi bi-clock-history"></i>
+
+                                                    Collected
+
+                                                </span>
+
+                                            }
+                                            else
+                                            {
+
+                                                <span class="status-returned">
+
+                                                    <i class="bi bi-check-circle"></i>
+
+                                                    @transaction.Status
+
+                                                </span>
+
+                                            }
+
+                                        </td>
+
+                                    </tr>
+
+                                    transactionSerial++;
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                }
+
+
+
+                <!-- =================================================
+                     NO RESULTS
+                     ================================================= -->
+                @if (Model.TotalResults == 0)
+                {
+
+                    <div class="empty-state">
+
+                        <i class="bi bi-search"></i>
+
+                        <h5>
+                            No Records Found
+                        </h5>
+
+                        <p>
+
+                            No records matched your search criteria.
+
+                            <br />
+
+                            Please check the search term and try again.
+
+                        </p>
+
+                    </div>
+
+                }
+
+            </div>
+
+        }
+        else
+        {
+
+            <!-- =================================================
+                 INITIAL SEARCH MESSAGE
+                 ================================================= -->
+
+            <div class="result-card">
+
+                <div class="empty-state">
+
+                    <i class="bi bi-search"></i>
+
+                    <h5>
+                        Search Key Room Records
+                    </h5>
+
+                    <p>
+
+                        Enter a search term above to search for
+                        staff, keys or key transaction records.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        }
+
+
+
+        <!-- =====================================================
+             FOOTER
+             ===================================================== -->
+
+        <div class="footer">
+
+            Key Room Management System
+
+            <br />
+
+            ICT Unit
+
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>
